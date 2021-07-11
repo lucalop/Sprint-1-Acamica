@@ -1,0 +1,505 @@
+openapi: 3.0.1
+title: Delilah Restó
+description: Sprint 1 Acámica- API para gestión de un restaurante 
+termsOfService: http://example.com/terms/
+contact:
+  name: API Support
+  url: http://www.example.com/support
+  email: support@example.com
+license:
+  name: Apache 2.0
+servers:
+  - url: http://localhost:3000
+
+paths:
+  
+  /login/newuser:
+    post:
+      tags:
+        - login
+      summary: "Crear usuario"
+      description: "Función para crear usuarios"
+      operationID: "crearUsuario"
+      produces:
+      - "application/xml"
+      - "application/json"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/usuario'
+      responses:
+        "400":
+          description: "Elemento inválido"
+        '200':
+          description: "Operación exitosa"
+
+  /login/login:
+    post:
+      tags:
+        - login
+      summary: "Ingreso a la cuenta"
+      description: "Función para ingresar a la cuenta"
+      operationID: "ingresoUsuario"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ingreso'
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+
+  /admin/{IdUsuario}/producto:
+    post:
+      tags:
+        - admin
+      summary: "Crea un nuevo producto"
+      description: "Función para crear un producto"
+      operationID: "crearProducto"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "autorization"
+        in: "header"
+        description: "Clave asignada al administrador (mail)"
+        required: true
+        schema: 
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/producto" 
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+
+  /admin/{IdUsuario}/producto/{IdProducto}:  
+    put:
+      tags:
+        - admin
+      summary: "Modificar un producto"
+      description: "Función para modificar un producto"
+      operationID: "modificarProducto"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "IdProducto"
+        in: "path"
+        description: "Identifica el id del producto"
+        required: true
+        type: "string"
+      - name: "autorization"
+        in: "header"
+        description: "Clave asignada al administrador (mail)"
+        required: true
+        schema: 
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/producto" 
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+          
+    delete:
+      tags:
+        - admin
+      summary: "Elimina un producto"
+      description: "Función para eliminar un producto"
+      operationID: "eliminarProducto"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "IdProducto"
+        in: "path"
+        description: "Identifica el id del producto"
+        required: true
+        type: "string"
+      - name: "autorization"
+        in: "header"
+        description: "Clave asignada al administrador (mail)"
+        required: true
+        schema: 
+          type: "string"
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+
+  /admin/{IdUsuario}/pedidoAdmin/{IdPedidoConfirmado}:
+    put:
+      tags:
+        - admin
+      summary: "Modifica el estado de un pedido confirmado"
+      description: "Función para modificar el estado de un pedido confirmado"
+      operationID: "modificarEstado"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "IdPedidoConfirmado"
+        in: "path"
+        description: "Identifica el id del pedido confirmado"
+        required: true
+        type: "string"
+      - name: "autorization"
+        in: "header"
+        description: "Clave asignada al administrador (mail)"
+        required: true
+        schema: 
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/cambiarEstado" 
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+
+  /admin/{IdUsuario}/pago:
+    post:
+      tags:
+        - admin
+      summary: "Crea un nuevo medio de pago"
+      description: "Función para crear un medio de pago"
+      operationID: "crearMPago"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "autorization"
+        in: "header"
+        description: "Clave asignada al administrador (mail)"
+        required: true
+        schema: 
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/pago"
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+
+    get:
+      tags:
+        - admin
+      summary: "Muestra todos los medios de pago disponibles"
+      description: "Función para mostrar todos los medios de pago"
+      operationID: "mostrarMPago"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "autorization"
+        in: "header"
+        description: "Clave asignada al administrador (mail)"
+        required: true
+        schema: 
+          type: "string"
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+
+  /admin/{IdUsuario}/pago/{IdPago}:
+    put:
+      tags:
+        - admin
+      summary: "Modifica un medio de pago"
+      description: "Función para modificar un medio de pago"
+      operationID: "modificarMPago"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "IdPago"
+        in: "path"
+        description: "Identifica el id del medio de pago"
+        required: true
+        type: "string"
+      - name: "autorization"
+        in: "header"
+        description: "Clave asignada al administrador (mail)"
+        required: true
+        schema: 
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/pago"
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+
+    delete:
+      tags:
+        - admin
+      summary: "Elimina un medio de pago"
+      description: "Función para eliminar un medio de pago"
+      operationID: "eliminarMPago"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "IdPago"
+        in: "path"
+        description: "Identifica el id del medio de pago"
+        required: true
+        type: "string"
+      - name: "autorization"
+        in: "header"
+        description: "Clave asignada al administrador (mail)"
+        required: true
+        schema: 
+          type: "string"
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+
+  /user/{IdUsuario}/pedido:
+    post:
+      tags:
+        - user
+      summary: "Crea un nuevo pedido"
+      description: "Función para crear un pedido"
+      operationID: "crearPedido"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/pedido"         
+      responses:
+        "400":
+          description: "Elemento inválido"
+
+        "200":
+          description: "Operación exitosa"
+
+    get:
+      tags:
+        - user
+      summary: "Muestra todos los pedidos"
+      description: "Función para mostrar los pedidos"
+      operationID: "mostrarPedido"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Elemento inválido"
+
+        "200":
+          description: "Operación exitosa"
+
+  /user/{IdUsuario}/pedido/{IdPedido}:
+    put:
+      tags:
+        - user
+      summary: "Modifica un pedido"
+      description: "Función para modificar un pedido"
+      operationID: "modificarPedido"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "IdPedido"
+        in: "path"
+        description: "Identifica el id del plato"
+        required: true
+        type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                cantidad:
+                  type: "integer"
+      responses:
+        "400":
+          description: "Elemento inválido"
+
+        "200":
+          description: "Operación exitosa"
+
+    delete:
+      tags:
+        - user
+      summary: "Elimina un pedido de acuerdo al id"
+      description: "Función para eliminar un pedido de acuerdo al id"
+      operationID: "eliminarPedido"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "IdPedido"
+        in: "path"
+        description: "Identifica el id del plato"
+        required: true
+        type: "string"
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+
+  /user/{IdUsuario}/pedido/confirmar:
+    post:
+      tags:
+        - user
+      summary: "Confirma un pedido"
+      description: "Función para confirmar un pedido"
+      operationID: "confirmarPedido"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/confirmarPedido"         
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"             
+
+definitions:
+
+  usuario:
+      type: "object"
+      properties:
+        nya:
+          type: "string"
+        email:
+          type: "string"
+          format: "int64"
+        telefono: 
+          type: "integer"
+        direccion:
+          type: "string"
+        pass:
+          type: "string"
+          format: "int64"
+
+  ingreso:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      pass:
+        type: "string"
+        format: "int64"
+
+  producto:
+    type: "object"
+    properties:
+      idPlato:
+        type: "string"
+      nombre:
+        type: "string"
+        format: "int64"
+      precio:
+        type: "number"
+
+  pago:
+    type: "object"
+    properties:
+      idMP:
+        type: "string"
+      nombre:
+        type: "string"
+  
+  pedido:
+    type: "object"
+    properties:
+      idPlato:
+        type: "string"
+      cantidad:
+        type: "integer"
+        format: "int64"
+  
+  confirmarPedido:
+    type: "object"
+    properties:
+      pago:
+        type: "string"
+      direccion:
+        type: "string"
+        description: "Si no desea cambiar su dirección deje el campo en blanco"
+  
+  cambiarEstado:
+    type: "object"
+    properties:
+      estado:
+        type: "string"
+        description: "se debe elegir un estado (preparando/enviando/entregado)"
