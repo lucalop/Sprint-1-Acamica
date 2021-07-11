@@ -1,0 +1,25 @@
+{
+  "name": "sprint1api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/LucasLop123/sprintacamica.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/LucasLop123/sprintacamica/issues"
+  },
+  "homepage": "https://gitlab.com/LucasLop123/sprintacamica#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "js-yaml": "^4.1.0",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6"
+  }
+}
