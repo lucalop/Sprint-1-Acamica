@@ -150,6 +150,35 @@ paths:
         "200":
           description: "Operación exitosa"
 
+
+
+  /admin/{IdUsuario}/pedidoAdmin:
+    get:
+      tags:
+        - admin
+      summary: "Para ver todos los pedidos confirmados"
+      description: "Función para ver todos lso pedidos confirmados"
+      operationID: "verPedidos"
+      parameters:
+      - name: "IdUsuario"
+        in: "path"
+        description: "Identifica el id del usuario"
+        required: true
+        type: "string"
+      - name: "autorization"
+        in: "header"
+        description: "Clave asignada al administrador (mail)"
+        required: true
+        schema: 
+          type: "string"
+      responses:
+        "400":
+          description: "Elemento inválido"
+        "200":
+          description: "Operación exitosa"
+
+
+
   /admin/{IdUsuario}/pedidoAdmin/{IdPedidoConfirmado}:
     put:
       tags:
