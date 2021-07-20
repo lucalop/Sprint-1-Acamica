@@ -68,6 +68,12 @@ function cambiarEstado(req, res) {
   }
 }
 
+//Ver todos los pedidos
+function verPedidos (req,res){
+  res.status(200).json(pedidosConfirmados)
+
+}
+
 //Crear nuevos medios de pago
 function crearMPago(req, res) {
 
@@ -136,6 +142,7 @@ function mostrarMPago(req, res) {
 
 module.exports = {
   cambiarEstado,
+  verPedidos,
   crearMPago,
   editarMPago,
   eliminarMPago,
