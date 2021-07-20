@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { cambiarEstado, crearMPago, editarMPago, eliminarMPago,
-       mostrarMPago, modificarP, nuevoP, eliminarP } = require('../funciones/administrador.js');
+       mostrarMPago, modificarP, nuevoP, eliminarP, verPedidos } = require('../funciones/administrador.js');
 const { validarIDPago, validarIDProducto, validarIDPedido, validarIDPedidoAdmin } = require('../middlewares/middle.js');
 
 
@@ -23,6 +23,8 @@ router.delete('/producto/:id', validarIDProducto, eliminarP);
 //Cambiar estado de un pedido
 router.put('/pedidoAdmin/:id', validarIDPedidoAdmin, cambiarEstado);
 
+//Ver todos los pedidos
+router.get('/pedidoAdmin', verPedidos);
 
 //Sección medios de pago-----
 
